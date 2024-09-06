@@ -1,13 +1,19 @@
+import { plugin } from "postcss";
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {
-      colors: {
-        "primary-gradient":
-          "background: linear-gradient(270deg, rgba(255, 80, 35, 0.22) 0%, #FF5023 50%, #BF3C1A 100%)",
-      },
-    },
+    extend: {},
   },
-  plugins: [],
+  plugins: [
+    function ({ addUtilities }) {
+      const newUtilities = {
+        ".clip_polygon": {
+          "clip-path": "polygon(0 0, 100% 0, 100% 100%, 0 79%)",
+        },
+      };
+      addUtilities(newUtilities);
+    },
+  ],
 };

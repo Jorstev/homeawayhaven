@@ -8,14 +8,16 @@ function AppLayout() {
   const isActive = useMediaQuery("(min-width: 768px)");
 
   return (
-    <div className="md:grid md:grid-cols-[8rem_1fr] lg:grid-cols-[20rem_1fr]">
+    <div className="md:grid md:grid-cols-[6rem_1fr] lg:grid-cols-[20rem_1fr]">
       <Header
         showMenu={showMenu}
         setShowMenu={setShowMenu}
         isActive={isActive}
       />
       {isActive === true || (showMenu === false && isActive === false) ? (
-        <Outlet />
+        <main className="h-[85vh] w-full md:h-lvh overflow-scroll">
+          <Outlet />
+        </main>
       ) : (
         ""
       )}

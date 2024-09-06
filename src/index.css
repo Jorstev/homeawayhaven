@@ -12,3 +12,8 @@
     @apply bg-gray-100 transition-colors duration-500 md:pr-0;
   }
 }
+@layer base {
+  body {
+    font-family: "Roboto", sans-serif;
+  }
+}
