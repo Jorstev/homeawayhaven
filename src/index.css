@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer components {
+  .active {
+    @apply h-16 w-full flex justify-center items-center gap-10 text-base pr-36 bg-gradient-to-r from-red-700 to-red-300 text-white md:pr-0;
+  }
+  .inactive {
+    @apply h-16 w-full flex justify-center items-center gap-10 text-base pr-36 md:pr-0;
+  }
+  .inactive:hover {
+    @apply bg-gray-100 transition-colors duration-500 md:pr-0;
+  }
+}
