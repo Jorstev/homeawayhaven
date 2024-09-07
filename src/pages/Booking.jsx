@@ -1,8 +1,10 @@
+import BookingFilter from "../features/booking/BookingFilter";
 import BookingItem from "../features/booking/BookingItem";
 
 function Booking() {
   return (
     <div className="max-w-3xl 2xl:max-w-5xl  min-w-[370px] mx-auto">
+      <BookingFilter />
       <h1 className="py-7 pl-3 sm:pl-20 md:pl-10 text-2xl font-semibold">
         Booking
       </h1>
