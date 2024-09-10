@@ -1,24 +1,22 @@
 import { useState } from "react";
 import ButtonFilter from "./ButtonFilter";
 
-function BookingFilter() {
-  const [activeFilter, setActiveFilter] = useState(null);
-
+function BookingFilter({ activeFilter, setActiveFilter }) {
   return (
     <div className="grid place-items-center pt-7">
       <div className="border border-gray-300 grid-cols-3 p-2 gap-4 grid">
         <ButtonFilter
-          filterType={"Hotels"}
+          filterType={"hotel"}
           activeFilter={activeFilter}
           setActiveFilter={setActiveFilter}
         />
         <ButtonFilter
-          filterType={"Cabins"}
+          filterType={"cabin"}
           activeFilter={activeFilter}
           setActiveFilter={setActiveFilter}
         />
         <ButtonFilter
-          filterType={"Houses"}
+          filterType={"house"}
           activeFilter={activeFilter}
           setActiveFilter={setActiveFilter}
         />

@@ -14,7 +14,7 @@ function ButtonFilter({ filterType, activeFilter, setActiveFilter }) {
       onClick={() => setActiveFilter(filterType)}
     >
       {filterType}
-      {filterType !== "Houses" && (
+      {filterType !== "house" && (
         <div className="absolute w-[16px] h-2 bg-gray-200 -right-[17px] top-1/2 -translate-y-1/2"></div>
       )}
     </button>

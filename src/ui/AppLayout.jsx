@@ -5,6 +5,7 @@ import useMediaQuery from "../utils/mediaQuery";
 
 function AppLayout() {
   const [showMenu, setShowMenu] = useState(false);
+
   const isActive = useMediaQuery("(min-width: 768px)");
 
   return (
@@ -15,7 +16,7 @@ function AppLayout() {
         isActive={isActive}
       />
       {isActive === true || (showMenu === false && isActive === false) ? (
-        <main className="h-[85vh] w-full md:h-lvh overflow-scroll">
+        <main className="h-[85vh] w-full md:h-lvh overflow-x-auto overflow-y-auto">
           <Outlet />
         </main>
       ) : (
