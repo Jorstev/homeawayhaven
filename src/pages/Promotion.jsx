@@ -1,19 +1,12 @@
-import { useQuery } from "@tanstack/react-query";
 import BookingFilter from "../features/booking/BookingFilter";
 import BookingItem from "../features/booking/BookingItem";
-import { getAllBooking } from "../services/apiBookings";
+import { useOutletContext } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function Promotion() {
-  const {
-    isPending,
-    isError,
-    data: bookings,
-    error,
-  } = useQuery({
-    queryKey: ["bookings"],
-    queryFn: getAllBooking,
-  });
+  const activeFilter = useSelector((state) => state.booking.activeFilter);
 
+  const { bookings, isPending, isError, error } = useOutletContext();
   if (isPending) {
     return <span>Loading Promotions...</span>;
   }
@@ -28,7 +21,12 @@ function Promotion() {
       </h1>
       <div className="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 place-items-center gap-y-10">
         {bookings
-          .filter((booking) => booking.discount !== 0)
+          .filter((booking) =>
+            activeFilter
+              ? booking.classification === activeFilter &&
+                booking.discount !== 0
+              : booking.discount !== 0
+          )
           .map((booking) => (
             <BookingItem booking={booking} key={booking.booking_id} />
           ))}

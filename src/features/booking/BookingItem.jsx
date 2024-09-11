@@ -38,7 +38,7 @@ function BookingItem({ booking }) {
         <span className="text-base font-medium">{title}</span>
       </div>
       <div
-        className={`flex justify-around w-full h-6 ${discount ? "h-12" : ""}`}
+        className={`flex justify-around w-full  ${discount ? "h-12" : "h-6"}`}
       >
         <div
           className={`flex space-x-1 ${
