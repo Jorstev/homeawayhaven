@@ -7,6 +7,7 @@ import Luxury from "./pages/Luxury";
 import Administration from "./pages/Administration";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import BookingDetails from "./pages/BookingDetails";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,7 +26,11 @@ function App() {
           <Route path="/" element={<AppLayout />}>
             <Route index element={<Navigate to={"/booking"} />}></Route>
 
-            <Route index path="/booking" element={<Booking />}></Route>
+            <Route path="/booking" element={<Booking />}></Route>
+            <Route
+              path="/booking/:booking_id"
+              element={<BookingDetails />}
+            ></Route>
             <Route path="/promotion" element={<Promotion />}></Route>
             <Route path="/luxury" element={<Luxury />}></Route>
             <Route path="/bookmark" element={<Bookmark />}></Route>

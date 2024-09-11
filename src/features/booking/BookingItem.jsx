@@ -1,9 +1,12 @@
 import { CiHeart } from "react-icons/ci";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdDiscount } from "react-icons/md";
+import { Link } from "react-router-dom";
+import HeartBookmark from "../../ui/HeartBookmark";
 
 function BookingItem({ booking }) {
   const {
+    booking_id,
     title,
     country,
     // latitude,
@@ -21,7 +24,10 @@ function BookingItem({ booking }) {
     (price - (discount / 100) * price).toFixed(2);
 
   return (
-    <div className="relative h-64 w-48 md:h-64 md:w-52 flex flex-col justify-between shadow-md border border-gray-100 cursor-pointer">
+    <Link
+      to={`/booking/${booking_id}`}
+      className="relative h-64 w-48 md:h-64 md:w-52 flex flex-col justify-between shadow-md border border-gray-100 cursor-pointer"
+    >
       <div className="w-full h-44 clip_polygon">
         <img
           className="w-full h-44"
@@ -31,9 +37,7 @@ function BookingItem({ booking }) {
           loading="lazy"
         />
       </div>
-      <div className="absolute rounded-full p-2 bg-white right-1 top-1 cursor-pointer hover:scale-110 transition-transform duration-300">
-        <CiHeart className="text-xl text-gray-500" />
-      </div>
+      <HeartBookmark />
       <div className="w-full pl-2">
         <span className="text-base font-medium">{title}</span>
       </div>
@@ -70,7 +74,7 @@ function BookingItem({ booking }) {
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
