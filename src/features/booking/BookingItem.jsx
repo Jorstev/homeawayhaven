@@ -37,7 +37,7 @@ function BookingItem({ booking }) {
           loading="lazy"
         />
       </div>
-      <HeartBookmark />
+      <HeartBookmark position={"right-1 top-1"} />
       <div className="w-full pl-2">
         <span className="text-base font-medium">{title}</span>
       </div>
