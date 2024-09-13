@@ -9,3 +9,26 @@ export async function getAllBooking() {
   }
   return data;
 }
+
+// let { data: booking_amenities, error } = await supabase
+//   .from("booking_amenities")
+//   .select("amenity_id")
+//   .eq("booking_id", booking_id);
+
+export async function getAllAmenitiesById(booking_id) {
+  let { data: amenities, error } = await supabase
+    .from("booking_amenities")
+    .select(
+      `
+      amenity_id,
+      amenities (amenity)
+    `
+    )
+    .eq("booking_id", booking_id); // Filter by booking_id in booking_amenities table
+
+  if (error) {
+    throw new Error("We could not load the amenities");
+  }
+
+  return amenities;
+}

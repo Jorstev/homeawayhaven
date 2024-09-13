@@ -1,6 +1,9 @@
 import { useOutletContext, useParams } from "react-router-dom";
 import HeartBookmark from "../ui/HeartBookmark";
 import ReservationDetail from "../features/booking/ReservationDetail";
+import Amenity from "../features/booking/Amenity";
+import { getAllAmenitiesById } from "../services/apiBookings";
+import { useQuery } from "@tanstack/react-query";
 
 function BookingDetails() {
   const { booking_id } = useParams();
@@ -8,7 +11,16 @@ function BookingDetails() {
   const bookingDetails = bookings.find(
     (booking) => booking.booking_id === booking_id
   );
-  console.log(bookingDetails);
+
+  const {
+    isPending,
+    isError,
+    error,
+    data: amenities,
+  } = useQuery({
+    queryKey: ["amenities"],
+    queryFn: () => getAllAmenitiesById(booking_id),
+  });
 
   const {
     title,
@@ -57,6 +69,17 @@ function BookingDetails() {
             <ReservationDetail maxCapacity={maxCapacity} detail={"capacity"} />
             <ReservationDetail maxCapacity={maxCapacity} detail={"bed"} />
             <ReservationDetail maxCapacity={maxCapacity} detail={"time"} />
+          </div>
+        </section>
+        <section className="border-b border-b-gray-300 py-7 ">
+          <h3 className="pb-7 font-semibold">Amenities</h3>
+          <div className="grid grid-cols-3 gap-3 lg:grid-cols-4">
+            {amenities?.map((amenity) => (
+              <Amenity
+                amenityValue={amenity.amenities.amenity}
+                key={amenity.amenity_id}
+              />
+            ))}
           </div>
         </section>
       </section>

@@ -3,6 +3,8 @@ import { IoLocationSharp } from "react-icons/io5";
 import { MdDiscount } from "react-icons/md";
 import { Link } from "react-router-dom";
 import HeartBookmark from "../../ui/HeartBookmark";
+import { useQuery } from "@tanstack/react-query";
+import { getCountryByName } from "../../services/apiCountry";
 
 function BookingItem({ booking }) {
   const {
@@ -19,6 +21,15 @@ function BookingItem({ booking }) {
     // luxury,
     image,
   } = booking;
+
+  const { isPending, data, isError, error } = useQuery({
+    queryKey: ["country"],
+    queryFn: () => getCountryByName(country),
+  });
+
+  if (!isPending) {
+    console.log(data);
+  }
 
   const discountPrice = (discount) =>
     (price - (discount / 100) * price).toFixed(2);
@@ -54,7 +65,7 @@ function BookingItem({ booking }) {
 
           <img
             className="h-5 w-5 object-contain"
-            src="/costarica.jpg"
+            // src={isPending ? "" : data.flags.png}
             alt="flag"
           />
         </div>
