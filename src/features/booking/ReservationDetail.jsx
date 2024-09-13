@@ -1,17 +1,24 @@
 import { FaUsers } from "react-icons/fa";
 import { GoClockFill } from "react-icons/go";
 import { IoBed } from "react-icons/io5";
+import { RxValue } from "react-icons/rx";
 
-function ReservationDetail({ maxCapacity, detail }) {
+function ReservationDetail({ maxCapacity, detail, numBeds, checkout }) {
   const type = {
-    bed: { name: "Beds", icon: <IoBed className="text-xl" color="#be2525" /> },
+    bed: {
+      name: "Beds",
+      icon: <IoBed className="text-xl" color="#be2525" />,
+      value: numBeds,
+    },
     capacity: {
       name: "Capacity",
       icon: <FaUsers className="text-xl" color="#be2525" />,
+      value: maxCapacity,
     },
     time: {
-      name: "Time",
+      name: "Check Out Time",
       icon: <GoClockFill className="text-xl" color="#be2525" />,
+      value: checkout,
     },
   };
   return (
@@ -20,9 +27,7 @@ function ReservationDetail({ maxCapacity, detail }) {
         {type[detail].icon}
         <span className=" font-light text-sm">{type[detail].name}</span>
       </div>
-      <div className="text-3xl text-cyan-400">
-        {detail === "time" ? "14:00" : maxCapacity}
-      </div>
+      <div className="text-3xl text-cyan-400">{type[detail].value}</div>
     </div>
   );
 }

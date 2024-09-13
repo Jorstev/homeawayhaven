@@ -4,6 +4,9 @@ import ReservationDetail from "../features/booking/ReservationDetail";
 import Amenity from "../features/booking/Amenity";
 import { getAllAmenitiesById } from "../services/apiBookings";
 import { useQuery } from "@tanstack/react-query";
+import { getCountryByName } from "../services/apiCountry";
+import { IoLocationSharp } from "react-icons/io5";
+import BookingMap from "../features/booking/BookingMap";
 
 function BookingDetails() {
   const { booking_id } = useParams();
@@ -34,8 +37,29 @@ function BookingDetails() {
     // classification,
     // luxury,
     image,
+    numBeds,
+    checkout,
   } = bookingDetails;
-  // Now you can use the booking_id to load data based on this parameter
+
+  const {
+    isPending: isPendingCountry,
+    data: countryData,
+    isError: isErrorCountry,
+    error: errorCountry,
+  } = useQuery({
+    queryKey: ["country"],
+    queryFn: () => getCountryByName(country),
+  });
+  let lat = "";
+  let lng = "";
+  if (!isPendingCountry) {
+    [lat, lng] = countryData[0].capitalInfo.latlng;
+
+    console.log(lat, lng);
+    // console.log(countryData[0]);
+
+    // console.log(countryData[0]?.flags?.svg);
+  }
 
   return (
     <div className="max-w-3xl 2xl:max-w-5xl min-w-[370px] mx-auto flex flex-col ">
@@ -66,9 +90,24 @@ function BookingDetails() {
         <section className="border-b border-b-gray-300 py-7 ">
           <h3 className="pb-7 font-semibold">Reservation Details</h3>
           <div className="flex gap-3 flex-wrap justify-center md:justify-evenly">
-            <ReservationDetail maxCapacity={maxCapacity} detail={"capacity"} />
-            <ReservationDetail maxCapacity={maxCapacity} detail={"bed"} />
-            <ReservationDetail maxCapacity={maxCapacity} detail={"time"} />
+            <ReservationDetail
+              maxCapacity={maxCapacity}
+              detail={"capacity"}
+              checkout={checkout}
+              numBeds={numBeds}
+            />
+            <ReservationDetail
+              maxCapacity={maxCapacity}
+              detail={"bed"}
+              checkout={checkout}
+              numBeds={numBeds}
+            />
+            <ReservationDetail
+              maxCapacity={maxCapacity}
+              detail={"time"}
+              checkout={checkout}
+              numBeds={numBeds}
+            />
           </div>
         </section>
         <section className="border-b border-b-gray-300 py-7 ">
@@ -81,6 +120,23 @@ function BookingDetails() {
               />
             ))}
           </div>
+        </section>
+        <section className="border-b border-b-gray-300 py-7">
+          <div className="flex space-x-2">
+            <IoLocationSharp color="#3CD2D2" />
+            <h3 className="pb-3 font-semibold">Location</h3>
+          </div>
+          <div className="flex items-center space-x-3 pb-3">
+            <span>{country}</span>
+            <img
+              className="w-7 h-5 shadow-lg"
+              src={!isPendingCountry ? countryData[0]?.flags?.svg : ""}
+              alt="country-image"
+            />
+          </div>
+          {isPendingCountry || (
+            <BookingMap lat={lat} lng={lng} price={price} title={title} />
+          )}
         </section>
       </section>
     </div>
