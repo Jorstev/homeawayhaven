@@ -6,7 +6,7 @@ export default {
   theme: {
     extend: {
       animation: {
-        "fade-in": "fadeIn 1s ease-in-out 1.5s forwards",
+        "fade-in": "fadeIn 1s ease-in-out 1.2s forwards",
       },
       keyframes: {
         fadeIn: {
@@ -21,6 +21,9 @@ export default {
       const newUtilities = {
         ".clip_polygon": {
           "clip-path": "polygon(0 0, 100% 0, 100% 100%, 0 79%)",
+        },
+        ".clip_polygon_luxury": {
+          "clip-path": "polygon(0 0, 82% 0, 100% 100%, 0% 100%)",
         },
       };
       addUtilities(newUtilities);

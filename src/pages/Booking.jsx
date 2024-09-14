@@ -1,5 +1,6 @@
 import BookingFilter from "../features/booking/BookingFilter";
 import BookingItem from "../features/booking/BookingItem";
+import BookingItemLuxury from "../features/booking/BookingItemLuxury";
 
 import { useOutletContext } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -23,8 +24,9 @@ function Booking() {
           ?.filter((booking) =>
             activeFilter
               ? booking.classification === activeFilter &&
-                booking.discount === 0
-              : booking.discount === 0
+                booking.discount === 0 &&
+                booking.luxury === false
+              : booking.discount === 0 && booking.luxury === false
           )
           .map((booking) => (
             <BookingItem booking={booking} key={booking.booking_id} />

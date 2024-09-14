@@ -8,13 +8,9 @@ function BookingItem({ booking }) {
     booking_id,
     title,
     country,
-    // latitude,
-    // longitude,
-    // maxCapacity,
-    // description,
+
     price,
     discount,
-    // classification,
     // luxury,
     image,
   } = booking;

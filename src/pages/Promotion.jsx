@@ -24,8 +24,9 @@ function Promotion() {
           .filter((booking) =>
             activeFilter
               ? booking.classification === activeFilter &&
-                booking.discount !== 0
-              : booking.discount !== 0
+                booking.discount !== 0 &&
+                booking.luxury === false
+              : booking.discount !== 0 && booking.luxury === false
           )
           .map((booking) => (
             <BookingItem booking={booking} key={booking.booking_id} />

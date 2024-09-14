@@ -1,7 +1,6 @@
 import { FaUsers } from "react-icons/fa";
 import { GoClockFill } from "react-icons/go";
 import { IoBed } from "react-icons/io5";
-import { RxValue } from "react-icons/rx";
 
 function ReservationDetail({ maxCapacity, detail, numBeds, checkout }) {
   const type = {

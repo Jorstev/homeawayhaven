@@ -24,7 +24,7 @@ function BookingMap({ lat, lng, title, price }) {
       mapRef.current.setView([lat, lng]);
       L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution:
-          '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+          '&copy; <a href="https://www.openstreetmap.org/copyright">',
       }).addTo(mapRef.current);
 
       L.marker([lat, lng])
