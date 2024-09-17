@@ -5,7 +5,7 @@ import NavOption from "./NavOption";
 function Header({ showMenu, setShowMenu, isActive }) {
   return (
     <>
-      <header className="md:grid relative md:border-r md:border-gray-200">
+      <header className=" md:grid relative md:border-r md:border-gray-200">
         <div className="h-[15vh]">
           <div className="absolute left-6 top-8 translate-y-1/2 md:hidden">
             {showMenu ? (

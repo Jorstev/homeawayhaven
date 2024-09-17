@@ -33,8 +33,8 @@ function BookingItem({ booking }) {
         />
       </div>
       <HeartBookmark position={"right-1 top-1"} />
-      <div className="w-full pl-2">
-        <span className="text-base font-medium">{title}</span>
+      <div className="w-full pl-1">
+        <span className="text-base font-medium whitespace-nowrap">{title}</span>
       </div>
       <div
         className={`flex justify-around w-full  ${discount ? "h-12" : "h-6"}`}
