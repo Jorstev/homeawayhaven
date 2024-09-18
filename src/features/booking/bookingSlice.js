@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const initialState = { activeFilter: null };
+const initialState = { activeFilter: null, formData: null };
 
 export const bookingSlice = createSlice({
   name: "booking",
@@ -13,8 +13,11 @@ export const bookingSlice = createSlice({
         state.activeFilter = null;
       }
     },
+    setFormData: (state, action) => {
+      state.formData = action.payload;
+    },
   },
 });
 
-export const { setActiveFilter } = bookingSlice.actions;
+export const { setActiveFilter, setFormData } = bookingSlice.actions;
 export default bookingSlice.reducer;

@@ -1,17 +1,29 @@
-function ReservationConfirmation({
-  formData,
-  title,
-  country,
-  maxCapacity,
-  price,
-  discount,
-  numBeds,
-  checkout,
-}) {
+import { useSelector } from "react-redux";
+import { useOutletContext, useParams } from "react-router-dom";
+
+function ReservationConfirmation() {
+  const formData = useSelector((state) => state.booking.formData);
   const { firstName, Calendar, emailAddress, lastName } = formData;
 
+  const { booking_id } = useParams();
+  const { bookings } = useOutletContext();
+  const bookingDetails = bookings.find(
+    (booking) => booking.booking_id === booking_id
+  );
+  const {
+    title,
+    country,
+    maxCapacity,
+
+    price,
+    discount,
+
+    numBeds,
+    checkout,
+  } = bookingDetails;
+
   return (
-    <div className="h-full md:h-lvh w-full absolute top-0 left-0 z-10 p-10 bg-black bg-opacity-30 backdrop-blur-md">
+    <div className="max-w-3xl 2xl:max-w-5xl  min-w-[370px] mx-auto">
       <div className="h-full bg-white p-8 rounded-lg relative z-20 flex flex-col items-center space-y-4">
         <div className="w-12 mb-4">
           <img src="/public/tablet_logo.png" alt="HomeAwayHaven logo" />
@@ -35,7 +47,7 @@ function ReservationConfirmation({
           <p className="text-gray-700">
             You have reserved at <span className="font-bold">{title}</span> from{" "}
             <span className="font-bold">
-              {Calendar[0].toLocaleDateString()}
+              {Calendar[0]?.toLocaleDateString()}
             </span>{" "}
             to{" "}
             <span className="font-bold">

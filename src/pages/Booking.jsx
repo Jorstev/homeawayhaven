@@ -1,6 +1,5 @@
 import BookingFilter from "../features/booking/BookingFilter";
 import BookingItem from "../features/booking/BookingItem";
-import BookingItemLuxury from "../features/booking/BookingItemLuxury";
 
 import { useOutletContext } from "react-router-dom";
 import { useSelector } from "react-redux";

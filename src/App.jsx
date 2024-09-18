@@ -9,6 +9,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import BookingDetails from "./pages/BookingDetails";
 import BookingPayment from "./features/booking/BookingPayment";
+import ReservationConfirmation from "./features/booking/ReservationConfirmation";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -36,6 +38,10 @@ function App() {
               path="/booking/:booking_id/payment"
               element={<BookingPayment />}
             ></Route>
+            <Route
+              path="/booking/:booking_id/payment/confirmation"
+              element={<ReservationConfirmation />}
+            ></Route>
             <Route path="/promotion" element={<Promotion />}></Route>
             <Route path="/luxury" element={<Luxury />}></Route>
             <Route path="/bookmark" element={<Bookmark />}></Route>
@@ -43,6 +49,7 @@ function App() {
           </Route>
         </Routes>
       </BrowserRouter>
+      <Toaster position="bottom-center" />
     </QueryClientProvider>
   );
 }

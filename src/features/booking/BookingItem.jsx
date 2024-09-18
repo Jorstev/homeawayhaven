@@ -11,7 +11,7 @@ function BookingItem({ booking }) {
 
     price,
     discount,
-    // luxury,
+    classification,
     image,
   } = booking;
 
@@ -21,18 +21,41 @@ function BookingItem({ booking }) {
   return (
     <Link
       to={`/booking/${booking_id}`}
-      className="relative h-64 w-48 md:h-64 md:w-52 flex flex-col justify-between shadow-md border border-gray-100 cursor-pointer"
+      className="relative h-64 w-48 md:h-64 md:w-52 flex flex-col justify-between shadow-md border border-gray-100 cursor-pointer z-0"
     >
       <div className="w-full h-44 clip_polygon">
         <img
-          className="w-full h-44"
+          className="w-full h-44 bg-gray-300"
           src={image}
           alt="book-image"
           role="presentation"
           loading="lazy"
         />
       </div>
-      <HeartBookmark position={"right-1 top-1"} />
+      <HeartBookmark
+        position={"right-1 top-1"}
+        onClick={(e) => {
+          e.preventDefault();
+          console.log(`bookmark ${booking_id}`);
+          let data = {
+            booking_id: booking_id,
+            title: title,
+            country: country,
+            price: price,
+            discount: discount,
+            classification: classification,
+            image: image,
+          };
+          // console.log(localStorage.getItem(booking_id));
+
+          if (localStorage.getItem(booking_id) === null) {
+            localStorage.setItem(booking_id, JSON.stringify(data));
+          } else {
+            localStorage.removeItem(booking_id);
+          }
+        }}
+        booking={booking}
+      />
       <div className="w-full pl-1">
         <span className="text-base font-medium whitespace-nowrap">{title}</span>
       </div>

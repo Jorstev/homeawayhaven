@@ -26,7 +26,7 @@ function BookingItem({ booking }) {
       <div>
         <div className="w-full h-full clip_polygon_luxury">
           <img
-            className="w-full h-44"
+            className="w-full h-44 bg-gray-300"
             src={image}
             alt="book-image"
             role="presentation"
