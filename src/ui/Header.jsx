@@ -1,8 +1,10 @@
 import { LiaBarsSolid } from "react-icons/lia";
 import { IoMdClose } from "react-icons/io";
 import NavOption from "./NavOption";
+import { useSelector } from "react-redux";
 
 function Header({ showMenu, setShowMenu, isActive }) {
+  const adminLoginState = useSelector((state) => state.booking.adminValidation);
   return (
     <>
       <header className=" md:grid relative md:border-r md:border-gray-200">
@@ -67,7 +69,7 @@ function Header({ showMenu, setShowMenu, isActive }) {
             </div>
             <div>
               <NavOption
-                endpoint={"/administration"}
+                endpoint={`${adminLoginState ? "/login/console" : "/login"}`}
                 setShowMenu={setShowMenu}
                 showMenu={showMenu}
                 title={"Administration"}

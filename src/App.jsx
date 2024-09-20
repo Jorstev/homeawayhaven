@@ -46,7 +46,8 @@ function App() {
             <Route path="/promotion" element={<Promotion />}></Route>
             <Route path="/luxury" element={<Luxury />}></Route>
             <Route path="/bookmark" element={<Bookmark />}></Route>
-            <Route path="/administration" element={<Login />}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/login/console" element={<Administration />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

@@ -1,7 +1,14 @@
 import { useForm } from "react-hook-form";
 import InputField from "../ui/InputField";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setAdminValidation } from "../features/booking/bookingSlice";
 
 function Login() {
+  // const [validated, setValidated] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
   const {
     handleSubmit,
     register,
@@ -11,12 +18,21 @@ function Login() {
   } = useForm();
 
   const onSubmit = (formData) => {
-    console.log(formData);
+    dispatch(setAdminValidation(true));
+    // setValidated(true);
+    // let data = { userInfo: formData, validated };
+    // localStorage.setItem("AdminUser", JSON.stringify(data));
+    navigate("/login/console");
   };
   return (
-    <div className="mt-32 md:mt-60">
+    <div className="mt-14 md:mt-36 mx-auto w-[22rem] md:w-[28rem] md:mx-auto flex flex-col items-center justify-around h-[28rem] md:h-[27rem] shadow-lg">
+      <div>
+        <h1 className="font-semibold text-lg md:text-xl text-gray-600">
+          Administration Console
+        </h1>
+      </div>
       <form
-        className="flex flex-col w-full items-center space-y-6 py-10"
+        className="flex flex-col w-full items-center space-y-6"
         onSubmit={handleSubmit(onSubmit)}
       >
         <InputField
