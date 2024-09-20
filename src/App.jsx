@@ -11,6 +11,7 @@ import BookingDetails from "./pages/BookingDetails";
 import BookingPayment from "./features/booking/BookingPayment";
 import ReservationConfirmation from "./features/booking/ReservationConfirmation";
 import { Toaster } from "react-hot-toast";
+import Login from "./pages/Login";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -45,7 +46,7 @@ function App() {
             <Route path="/promotion" element={<Promotion />}></Route>
             <Route path="/luxury" element={<Luxury />}></Route>
             <Route path="/bookmark" element={<Bookmark />}></Route>
-            <Route path="/administration" element={<Administration />}></Route>
+            <Route path="/administration" element={<Login />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>

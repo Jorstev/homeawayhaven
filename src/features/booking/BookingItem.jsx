@@ -1,22 +1,47 @@
+import { useState, useEffect } from "react";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdDiscount } from "react-icons/md";
 import { Link } from "react-router-dom";
 import HeartBookmark from "../../ui/HeartBookmark";
+import toast from "react-hot-toast";
 
 function BookingItem({ booking }) {
-  const {
-    booking_id,
-    title,
-    country,
-
-    price,
-    discount,
-    classification,
-    image,
-  } = booking;
+  const { booking_id, title, country, price, discount, classification, image } =
+    booking;
 
   const discountPrice = (discount) =>
     (price - (discount / 100) * price).toFixed(2);
+
+  const [bookmarkState, setBookmarkState] = useState(false);
+
+  // Load initial bookmark state from localStorage
+  useEffect(() => {
+    const isBookmarked = localStorage.getItem(booking_id) !== null;
+    setBookmarkState(isBookmarked);
+  }, [booking_id]);
+
+  const handleBookmarkClick = (e) => {
+    e.preventDefault();
+    const data = {
+      booking_id,
+      title,
+      country,
+      price,
+      discount,
+      classification,
+      image,
+    };
+
+    if (bookmarkState) {
+      localStorage.removeItem(booking_id);
+      toast.success("Successfully Removed!");
+    } else {
+      localStorage.setItem(booking_id, JSON.stringify(data));
+      toast.success("Bookmarked Successfully!");
+    }
+
+    setBookmarkState(!bookmarkState);
+  };
 
   return (
     <Link
@@ -34,27 +59,8 @@ function BookingItem({ booking }) {
       </div>
       <HeartBookmark
         position={"right-1 top-1"}
-        onClick={(e) => {
-          e.preventDefault();
-          console.log(`bookmark ${booking_id}`);
-          let data = {
-            booking_id: booking_id,
-            title: title,
-            country: country,
-            price: price,
-            discount: discount,
-            classification: classification,
-            image: image,
-          };
-          // console.log(localStorage.getItem(booking_id));
-
-          if (localStorage.getItem(booking_id) === null) {
-            localStorage.setItem(booking_id, JSON.stringify(data));
-          } else {
-            localStorage.removeItem(booking_id);
-          }
-        }}
-        booking={booking}
+        bookmarkState={bookmarkState}
+        onClick={handleBookmarkClick}
       />
       <div className="w-full pl-1">
         <span className="text-base font-medium whitespace-nowrap">{title}</span>

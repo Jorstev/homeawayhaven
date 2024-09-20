@@ -141,7 +141,7 @@ function BookingPayment() {
           placeholder="user@gmail.com"
           register={register}
         />
-        <div className="flex flex-col md:flex-row md:items-center justify-between w-96 mb-8 z-0">
+        <div className="flex flex-col md:flex-row md:items-center justify-between w-72  md:w-96 mb-8 z-0">
           <label className="font-light">Check In - Check Out Dates</label>
           <Calendar
             {...register("Calendar", { required: true })}

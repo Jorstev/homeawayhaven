@@ -3,10 +3,9 @@ import BookingItem from "../features/booking/BookingItem";
 
 function Bookmark() {
   const [bookmarkBookings, setBookmarkBookings] = useState([]);
-  // let bookmarkBookings = [];
+
   useEffect(() => {
     const fetchedBookings = [];
-
     for (const key in localStorage) {
       if (
         localStorage.getItem(key) !== false &&
@@ -17,8 +16,7 @@ function Bookmark() {
         fetchedBookings.push(booking);
       }
     }
-
-    setBookmarkBookings(fetchedBookings); // Set all bookings at once after loop
+    setBookmarkBookings(fetchedBookings);
   }, []);
 
   return (

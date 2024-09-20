@@ -11,7 +11,7 @@ function InputField({
   return (
     <div>
       <div
-        className={`flex flex-col md:flex-row md:items-center justify-between w-96 mb-8`}
+        className={`flex flex-col md:flex-row md:items-center justify-between w-72  md:w-96 mb-8`}
       >
         <label className="font-light">{fieldName}</label>
 
