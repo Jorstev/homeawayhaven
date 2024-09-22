@@ -12,6 +12,7 @@ import BookingPayment from "./features/booking/BookingPayment";
 import ReservationConfirmation from "./features/booking/ReservationConfirmation";
 import { Toaster } from "react-hot-toast";
 import Login from "./pages/Login";
+import EditBooking from "./features/administration/EditBooking";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -28,26 +29,27 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<AppLayout />}>
-            <Route index element={<Navigate to={"/booking"} />}></Route>
+            <Route index element={<Navigate to={"/booking"} />} />
 
-            <Route path="/booking" element={<Booking />}></Route>
-            <Route
-              path="/booking/:booking_id"
-              element={<BookingDetails />}
-            ></Route>
+            <Route path="/booking" element={<Booking />} />
+            <Route path="/booking/:booking_id" element={<BookingDetails />} />
             <Route
               path="/booking/:booking_id/payment"
               element={<BookingPayment />}
-            ></Route>
+            />
             <Route
               path="/booking/:booking_id/payment/confirmation"
               element={<ReservationConfirmation />}
-            ></Route>
-            <Route path="/promotion" element={<Promotion />}></Route>
-            <Route path="/luxury" element={<Luxury />}></Route>
-            <Route path="/bookmark" element={<Bookmark />}></Route>
-            <Route path="/login" element={<Login />}></Route>
-            <Route path="/login/console" element={<Administration />}></Route>
+            />
+            <Route path="/promotion" element={<Promotion />} />
+            <Route path="/luxury" element={<Luxury />} />
+            <Route path="/bookmark" element={<Bookmark />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/login/console" element={<Administration />} />
+            <Route
+              path="/login/console/:booking_id/edit"
+              element={<EditBooking />}
+            />
           </Route>
         </Routes>
       </BrowserRouter>

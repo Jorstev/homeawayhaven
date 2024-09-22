@@ -1,24 +1,56 @@
 import { useState, useEffect } from "react";
 import { IoLocationSharp } from "react-icons/io5";
 import { MdDiscount } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import HeartBookmark from "../../ui/HeartBookmark";
 import toast from "react-hot-toast";
+import EditButton from "../../ui/EditButton";
+import DeleteButton from "../../ui/DeleteButton";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { deleteBookingById } from "../../services/apiBookings";
 
 function BookingItem({ booking }) {
   const { booking_id, title, country, price, discount, classification, image } =
     booking;
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
+  const {
+    isLoading,
+    isError,
+    isSuccess,
+    mutate: mutateDelete,
+  } = useMutation({
+    mutationFn: deleteBookingById,
+    onSuccess: () => {
+      queryClient.invalidateQueries("bookings");
+      toast.success("Booking Successfully Removed!");
+    },
+    onError: () => {
+      toast.error("An error has occured!");
+    },
+  });
+  const currentURL = useLocation();
 
   const discountPrice = (discount) =>
     (price - (discount / 100) * price).toFixed(2);
 
   const [bookmarkState, setBookmarkState] = useState(false);
 
-  // Load initial bookmark state from localStorage
   useEffect(() => {
     const isBookmarked = localStorage.getItem(booking_id) !== null;
     setBookmarkState(isBookmarked);
   }, [booking_id]);
+
+  const handleDeleteBooking = (e) => {
+    e.preventDefault();
+    mutateDelete(booking_id);
+  };
+
+  const handleEditBooking = (e) => {
+    e.preventDefault();
+    navigate(`/login/console/${booking_id}/edit`);
+  };
 
   const handleBookmarkClick = (e) => {
     e.preventDefault();
@@ -46,8 +78,22 @@ function BookingItem({ booking }) {
   return (
     <Link
       to={`/booking/${booking_id}`}
-      className="relative h-64 w-48 md:h-64 md:w-52 flex flex-col justify-between shadow-md border border-gray-100 cursor-pointer z-0"
+      className="relative h-64 w-48 md:h-64 md:w-52 flex flex-col justify-between shadow-md border border-gray-100 cursor-pointer z-0 "
     >
+      {currentURL.pathname === "/login/console" ? (
+        <>
+          <EditButton
+            position={"top-1/3 left-1/4"}
+            onClick={handleEditBooking}
+          />
+          <DeleteButton
+            position={"top-1/3 left-[55%]"}
+            onClick={handleDeleteBooking}
+          />
+        </>
+      ) : (
+        ""
+      )}
       <div className="w-full h-44 clip_polygon">
         <img
           className="w-full h-44 bg-gray-300"
@@ -57,11 +103,16 @@ function BookingItem({ booking }) {
           loading="lazy"
         />
       </div>
-      <HeartBookmark
-        position={"right-1 top-1"}
-        bookmarkState={bookmarkState}
-        onClick={handleBookmarkClick}
-      />
+
+      {currentURL.pathname === "/login/console" ? (
+        ""
+      ) : (
+        <HeartBookmark
+          position={"right-1 top-1"}
+          bookmarkState={bookmarkState}
+          onClick={handleBookmarkClick}
+        />
+      )}
       <div className="w-full pl-1">
         <span className="text-base font-medium whitespace-nowrap">{title}</span>
       </div>
