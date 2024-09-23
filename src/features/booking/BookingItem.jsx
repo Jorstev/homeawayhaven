@@ -12,8 +12,8 @@ import { deleteBookingById } from "../../services/apiBookings";
 function BookingItem({ booking }) {
   const { booking_id, title, country, price, discount, classification, image } =
     booking;
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   const {
     isLoading,

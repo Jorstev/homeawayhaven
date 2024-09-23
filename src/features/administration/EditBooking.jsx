@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import InputField from "../../ui/InputField";
 import { useDispatch } from "react-redux";
+import { useState } from "react";
 
 function EditBooking() {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ function EditBooking() {
     setValue,
     reset,
   } = useForm();
+  const [newtitle, setNewTitle] = useState("");
 
   const onSubmit = (formData) => {
     console.log(formData);
@@ -83,17 +85,24 @@ function EditBooking() {
           registerName="title"
           type="text"
           register={register}
+          placeholder={title}
+          validation={{
+            required: true,
+            pattern: /^[A-Za-z ]+$/,
+          }}
         />
 
         <InputField
           fieldName="Country"
           registerName="country"
           validation={{
-            pattern: /^[A-Za-z]+$/i,
+            required: true,
+            pattern: /^[A-Za-z ]+$/,
           }}
           errors={errors}
           type="text"
           register={register}
+          placeholder={country}
         />
         <InputField
           fieldName="Maximun Capacity"
@@ -101,10 +110,12 @@ function EditBooking() {
           validation={{
             minLength: 1,
             pattern: /^[1-9][0-9]*$/,
+            required: true,
           }}
           errors={errors}
           type="number"
           register={register}
+          placeholder={maxCapacity}
         />
 
         <InputField
@@ -113,29 +124,62 @@ function EditBooking() {
           errors={errors}
           type="text"
           register={register}
+          placeholder={description}
+          validation={{ required: true }}
         />
 
         <InputField
           fieldName="Price"
           registerName="price"
           validation={{
+            required: true,
             pattern: /^\d*\.?\d+$/,
           }}
           errors={errors}
           type="number"
-          placeholder="1234567890123456"
+          placeholder={price}
           register={register}
+          step={0.01}
         />
 
         <InputField
           fieldName="Discount"
           registerName="discount"
           validation={{
+            required: true,
+
             pattern: /^(100|[1-9]?[0-9])$/,
           }}
           errors={errors}
           type="number"
           register={register}
+          placeholder={`${discount}%`}
+        />
+        <InputField
+          fieldName="Number of Beds"
+          registerName="numBeds"
+          validation={{
+            required: true,
+
+            pattern: /^[0-9]+$/,
+          }}
+          errors={errors}
+          type="number"
+          register={register}
+          placeholder={numBeds}
+        />
+        <InputField
+          fieldName="Check Out Time"
+          registerName="checkout"
+          validation={{
+            required: true,
+
+            pattern: /^([01][0-9]|2[0-3]):[0-5][0-9]$/,
+          }}
+          errors={errors}
+          type="time"
+          register={register}
+          placeholder={checkout}
         />
 
         <input

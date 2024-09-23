@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 function InputField({
   fieldName,
   registerName,
@@ -7,6 +9,8 @@ function InputField({
   placeholder,
   register,
   value,
+  disable = false,
+  step,
 }) {
   return (
     <div>
@@ -23,6 +27,8 @@ function InputField({
           type={type}
           placeholder={placeholder}
           {...register(registerName, validation)}
+          disabled={disable}
+          step={step}
         />
       </div>
       <div className="text-end">

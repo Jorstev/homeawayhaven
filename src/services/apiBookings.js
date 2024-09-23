@@ -39,10 +39,10 @@ export async function deleteBookingById(booking_id) {
   }
 }
 
-export async function updateBookingById(booking_id) {
+export async function updateBookingById(booking_id, newData) {
   const { data, error } = await supabase
     .from("booking")
-    .update({ other_column: "otherValue" }) //pass an object with all the data matching the columns names
+    .update(newData) //pass an object with all the data matching the columns names
     .eq("booking_id", booking_id)
     .select();
 
