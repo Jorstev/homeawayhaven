@@ -11,6 +11,7 @@ function InputField({
   value,
   disable = false,
   step,
+  valueAsNumberBoolean,
 }) {
   return (
     <div>
@@ -26,7 +27,10 @@ function InputField({
           value={value}
           type={type}
           placeholder={placeholder}
-          {...register(registerName, validation)}
+          {...register(registerName, {
+            ...validation,
+            valueAsNumber: valueAsNumberBoolean,
+          })}
           disabled={disable}
           step={step}
         />

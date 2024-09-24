@@ -1,11 +1,10 @@
 import { useForm } from "react-hook-form";
 import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import InputField from "../../ui/InputField";
-import { useDispatch } from "react-redux";
-import { useState } from "react";
+import { useMutationCustom } from "../../hooks/useMutation";
+import { updateBookingById } from "../../services/apiBookings";
 
 function EditBooking() {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { booking_id } = useParams();
   const { bookings } = useOutletContext();
@@ -27,51 +26,30 @@ function EditBooking() {
   } = bookingDetails;
 
   const {
+    isLoading: isLoadingEdit,
+    isError: isErrorEdit,
+    isSuccess: isSuccessEdit,
+    mutate: mutateEdit,
+  } = useMutationCustom(
+    updateBookingById,
+    "bookings",
+    "Booking Successfully Updated!",
+    "Could not update booking!"
+  );
+
+  const {
     handleSubmit,
     register,
     formState: { errors },
-    setValue,
     reset,
   } = useForm();
-  const [newtitle, setNewTitle] = useState("");
 
   const onSubmit = (formData) => {
     console.log(formData);
     console.log(booking_id);
-
-    // toast.custom((t) => (
-    //   <div
-    //     className={`${
-    //       t.visible ? "animate-enter" : "animate-leave"
-    //     } max-w-md w-full bg-white shadow-lg rounded-lg pointer-events-auto flex ring-1 ring-black ring-opacity-5`}
-    //   >
-    //     <div className="flex-1 w-0 p-4">
-    //       <div className="flex items-start">
-    //         <div className="flex-shrink-0 pt-0.5">
-    //           <img
-    //             className="h-10 w-10 rounded-full"
-    //             src="/public/tablet_logo.png"
-    //             alt="logo-image"
-    //           />
-    //         </div>
-    //         <div className="ml-3 flex-1">
-    //           <p className="text-sm font-medium text-gray-900">
-    //             {formData.firstName} {formData.lastName}
-    //           </p>
-    //           <p className="mt-1 text-sm text-gray-500">Payment Successful!</p>
-    //         </div>
-    //       </div>
-    //     </div>
-    //     <div className="flex border-l border-gray-200">
-    //       <button
-    //         onClick={() => toast.dismiss(t.id)}
-    //         className="w-full border border-transparent rounded-none rounded-r-lg p-4 flex items-center justify-center text-sm font-medium text-indigo-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-    //       >
-    //         Close
-    //       </button>
-    //     </div>
-    //   </div>
-    // ));
+    mutateEdit({ booking_id, ...formData });
+    reset();
+    navigate(`/login/console`);
   };
 
   return (
@@ -116,6 +94,7 @@ function EditBooking() {
           type="number"
           register={register}
           placeholder={maxCapacity}
+          valueAsNumberBoolean={true}
         />
 
         <InputField
@@ -140,6 +119,7 @@ function EditBooking() {
           placeholder={price}
           register={register}
           step={0.01}
+          valueAsNumberBoolean={true}
         />
 
         <InputField
@@ -154,6 +134,7 @@ function EditBooking() {
           type="number"
           register={register}
           placeholder={`${discount}%`}
+          valueAsNumberBoolean={true}
         />
         <InputField
           fieldName="Number of Beds"
@@ -167,6 +148,7 @@ function EditBooking() {
           type="number"
           register={register}
           placeholder={numBeds}
+          valueAsNumberBoolean={true}
         />
         <InputField
           fieldName="Check Out Time"

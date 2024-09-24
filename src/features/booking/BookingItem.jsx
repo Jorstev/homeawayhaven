@@ -6,41 +6,50 @@ import HeartBookmark from "../../ui/HeartBookmark";
 import toast from "react-hot-toast";
 import EditButton from "../../ui/EditButton";
 import DeleteButton from "../../ui/DeleteButton";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { deleteBookingById } from "../../services/apiBookings";
+import {
+  deleteBookingById,
+  updateBookingById,
+} from "../../services/apiBookings";
+import { useMutationCustom } from "../../hooks/useMutation";
 
 function BookingItem({ booking }) {
   const { booking_id, title, country, price, discount, classification, image } =
     booking;
   const navigate = useNavigate();
-  const queryClient = useQueryClient();
-
-  const {
-    isLoading,
-    isError,
-    isSuccess,
-    mutate: mutateDelete,
-  } = useMutation({
-    mutationFn: deleteBookingById,
-    onSuccess: () => {
-      queryClient.invalidateQueries("bookings");
-      toast.success("Booking Successfully Removed!");
-    },
-    onError: () => {
-      toast.error("An error has occured!");
-    },
-  });
   const currentURL = useLocation();
-
-  const discountPrice = (discount) =>
-    (price - (discount / 100) * price).toFixed(2);
-
   const [bookmarkState, setBookmarkState] = useState(false);
 
   useEffect(() => {
     const isBookmarked = localStorage.getItem(booking_id) !== null;
     setBookmarkState(isBookmarked);
   }, [booking_id]);
+
+  const {
+    isLoading: isLoadingDelete,
+    isError: isErrorDelete,
+    isSuccess: isSuccessDelete,
+    mutate: mutateDelete,
+  } = useMutationCustom(
+    deleteBookingById,
+    "bookings",
+    "Booking Successfully Removed!",
+    "An error has occured!"
+  );
+
+  const {
+    isLoading: isLoadingEdit,
+    isError: isErrorEdit,
+    isSuccess: isSuccessEdit,
+    mutate: mutateEdit,
+  } = useMutationCustom(
+    updateBookingById,
+    "bookings",
+    "Booking Successfully Updated!",
+    "An error has occured!"
+  );
+
+  const handlediscountPrice = (discount) =>
+    (price - (discount / 100) * price).toFixed(2);
 
   const handleDeleteBooking = (e) => {
     e.preventDefault();
@@ -132,10 +141,10 @@ function BookingItem({ booking }) {
             <div className="flex flex-col justify-between h-12">
               <div className="flex space-x-1 items-center">
                 <MdDiscount className="text-green-600" />
-                <span>{discountPrice(discount)}</span>
+                <span>${handlediscountPrice(discount)}</span>
               </div>
               <span className="text-right text-sm text-red-500 line-through">
-                {price}
+                ${price}
               </span>
             </div>
           ) : (
