@@ -13,6 +13,7 @@ import ReservationConfirmation from "./features/booking/ReservationConfirmation"
 import { Toaster } from "react-hot-toast";
 import Login from "./pages/Login";
 import EditBooking from "./features/administration/EditBooking";
+import AddBooking from "./features/administration/AddBooking";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -50,6 +51,7 @@ function App() {
               path="/login/console/:booking_id/edit"
               element={<EditBooking />}
             />
+            <Route path="/login/console/add" element={<AddBooking />} />
           </Route>
         </Routes>
       </BrowserRouter>

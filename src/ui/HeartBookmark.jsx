@@ -8,9 +8,9 @@ function HeartBookmark({ position, bookmarkState, onClick }) {
       onClick={onClick}
     >
       {bookmarkState ? (
-        <IoMdHeart className="text-xl text-gray-500" />
+        <IoMdHeart className="text-xl text-cyan-400" />
       ) : (
-        <CiHeart className="text-xl text-gray-500" />
+        <CiHeart className="text-xl text-cyan-400" />
       )}
     </div>
   );
