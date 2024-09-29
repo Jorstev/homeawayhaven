@@ -66,7 +66,7 @@ function BookingPayment() {
             <div className="flex-shrink-0 pt-0.5">
               <img
                 className="h-10 w-10 rounded-full"
-                src="/public/tablet_logo.png"
+                src="tablet_logo.png"
                 alt="logo-image"
               />
             </div>
