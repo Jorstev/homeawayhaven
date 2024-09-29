@@ -93,7 +93,7 @@ function BookingItem({ booking, updateBookmarks }) {
   return (
     <Link
       to={`/booking/${booking_id}`}
-      className="relative h-64 w-48 md:h-64 md:w-52 flex flex-col justify-between shadow-md border border-gray-100 cursor-pointer z-0 "
+      className="relative h-64 w-44 md:h-64 md:w-52 flex flex-col justify-between shadow-md border border-gray-100 cursor-pointer z-0 "
     >
       {currentURL.pathname === "/login/console" ? (
         <>
