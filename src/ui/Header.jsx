@@ -25,12 +25,12 @@ function Header({ showMenu, setShowMenu, isActive }) {
           <div className="h-full flex items-center justify-center md:items-start md:mt-10 lg:mb-40">
             <img
               className="max-h-20 md:hidden lg:block"
-              src="/public/logo.png"
+              src="/logo.png"
               alt="logo"
             />
             <img
               className="max-h-12 hidden md:block lg:hidden"
-              src="/public/tablet_logo.png"
+              src="/tablet_logo.png"
               alt="logo"
             />
           </div>

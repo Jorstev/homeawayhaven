@@ -32,12 +32,19 @@ function BookingDetails() {
     description,
     price,
     discount,
-    // classification,
-    // luxury,
+
     image,
     numBeds,
     checkout,
   } = bookingDetails;
+
+  const handlediscountPrice = (discount) => {
+    if (discount === 0) {
+      return null;
+    } else {
+      return (price - (discount / 100) * price).toFixed(2);
+    }
+  };
 
   const {
     isPending: isPendingCountry,
@@ -62,7 +69,6 @@ function BookingDetails() {
           src={image}
           alt="booking-image"
         />
-        <HeartBookmark position={"top-2.5 left-2.5 z-10"} />
         <div className="w-full h-full bg-black opacity-15 absolute top-0 left-0 z-0"></div>
         <h1 className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-100 text-3xl opacity-0 transition-opacity duration-1000 animate-fade-in text-center">
           {title}
@@ -79,7 +85,7 @@ function BookingDetails() {
               Reserve
             </Link>
             <button className="h-10 w-20 rounded-md bg-gray-100 text-cyan-400 text-sm">
-              ${price}
+              ${discount !== 0 ? handlediscountPrice(discount) : price}
             </button>
           </div>
         </section>

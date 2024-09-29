@@ -35,33 +35,44 @@ export async function deleteBookingById(booking_id) {
     .eq("booking_id", booking_id);
 
   if (error) {
-    throw new Error("We could not delete the booking item");
+    throw new Error("We could not add the new amenity");
   }
+  for (const key in localStorage) {
+    if (localStorage.getItem(key) === booking_id) {
+      localStorage.removeItem(booking_id);
+    }
+  }
+  localStorage.removeItem(booking_id);
 }
 
 export async function updateBookingById({ booking_id, ...formData }) {
   const { data, error } = await supabase
     .from("booking")
-    .update(formData) //pass an object with all the data matching the columns names
+    .update(formData)
     .eq("booking_id", booking_id);
 
   if (error) throw new Error("We could not update the selected item.");
 }
 
-export async function addNewBooking({ imageFile, ...formData }) {
-  let booking_id = Date.now();
+async function addNewAmenities(amenities) {
+  const { data, error } = await supabase
+    .from("booking_amenities")
+    .insert(amenities);
 
-  // 1. Extract the actual file name (not the FileList object)
-  // image is a FileList, so we access the first file
-  console.log(imageFile.name);
+  if (error) {
+    console.error(error);
+    throw new Error("Booking could not be created");
+  }
+}
+
+export async function addNewBooking({ imageFile, amenities, ...formData }) {
+  let booking_id = Date.now();
 
   const imageName = `${Math.random()}-${imageFile.name}`.replaceAll("/", "");
   const imagePath = `https://ryesuiscgjwqoanptuwr.supabase.co/storage/v1/object/public/bookingimages/${imageName}`;
 
-  // 2. Add image path and booking ID to formData
   formData = { ...formData, image: imagePath, booking_id: booking_id };
 
-  // 3. Insert booking data into the database
   const { data, error } = await supabase
     .from("booking")
     .insert([formData])
@@ -71,7 +82,16 @@ export async function addNewBooking({ imageFile, ...formData }) {
     throw new Error("Booking could not be created");
   }
 
-  // 4. Upload the image to Supabase storage
+  console.log(amenities);
+
+  let booking_amenities = amenities.map((amenity_id) => ({
+    booking_id,
+    amenity_id,
+  }));
+  console.log(booking_amenities);
+
+  await addNewAmenities(booking_amenities);
+
   const { error: storageError } = await supabase.storage
     .from("bookingimages")
     .upload(imageName, imageFile);

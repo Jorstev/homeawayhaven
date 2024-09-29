@@ -7,7 +7,6 @@ import {
   MdLocalLaundryService,
   MdOutlinePets,
 } from "react-icons/md";
-import { PiPersonSimpleSwimFill } from "react-icons/pi";
 import { TbAirConditioning } from "react-icons/tb";
 
 function Amenity({ amenityValue }) {

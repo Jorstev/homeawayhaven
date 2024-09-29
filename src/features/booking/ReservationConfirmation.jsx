@@ -22,6 +22,14 @@ function ReservationConfirmation() {
     checkout,
   } = bookingDetails;
 
+  const handlediscountPrice = (discount) => {
+    if (discount === 0) {
+      return null;
+    } else {
+      return (price - (discount / 100) * price).toFixed(2);
+    }
+  };
+
   return (
     <div className="max-w-3xl 2xl:max-w-5xl  min-w-[370px] mx-auto">
       <div className="h-full bg-white p-8 rounded-lg relative z-20 flex flex-col items-center space-y-4">
@@ -35,8 +43,13 @@ function ReservationConfirmation() {
 
         <div className="text-gray-600 text-center">
           Your payment of{" "}
-          <span className="font-bold text-green-500">${price}</span> has been
-          processed successfully.
+          <span className="font-bold text-green-500">
+            $
+            {discount !== 0
+              ? `${handlediscountPrice(discount)} (🙌 Promotional Price)`
+              : price}
+          </span>{" "}
+          has been processed successfully.
         </div>
 
         <div className="bg-gray-100 p-6 rounded-lg shadow-md w-full text-left space-y-2">

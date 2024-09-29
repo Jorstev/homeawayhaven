@@ -1,5 +1,3 @@
-import { useState } from "react";
-
 function InputField({
   fieldName,
   registerName,
@@ -12,6 +10,10 @@ function InputField({
   disable = false,
   step,
   valueAsNumberBoolean,
+  selection = false,
+  children,
+  discountEnable,
+  setDiscountEnable,
 }) {
   return (
     <div>
@@ -20,20 +22,32 @@ function InputField({
       >
         <label className="font-light">{fieldName}</label>
 
-        <input
-          className={`bg-gray-100 rounded-lg py-2 outline-none ${
-            errors?.[registerName] ? "border border-red-500" : ""
-          } ${fieldName === "CVV" ? "w-14 px-2" : "px-8"}`}
-          value={value}
-          type={type}
-          placeholder={placeholder}
-          {...register(registerName, {
-            ...validation,
-            valueAsNumber: valueAsNumberBoolean,
-          })}
-          disabled={disable}
-          step={step}
-        />
+        {selection ? (
+          <select
+            className={`bg-gray-100 rounded-lg py-2 outline-none ${
+              errors?.[registerName] ? "border border-red-500" : ""
+            } ${fieldName === "CVV" ? "w-14 px-2" : "px-8"}`}
+            {...register(registerName)}
+            onChange={(e) => setDiscountEnable(e.target.value === "true")}
+          >
+            {children}
+          </select>
+        ) : (
+          <input
+            className={`bg-gray-100 rounded-lg py-2 outline-none ${
+              errors?.[registerName] ? "border border-red-500" : ""
+            } ${fieldName === "CVV" ? "w-14 px-2" : "px-8"} `}
+            value={value}
+            type={type}
+            placeholder={placeholder}
+            {...register(registerName, {
+              ...validation,
+              valueAsNumber: valueAsNumberBoolean,
+            })}
+            disabled={disable}
+            step={step}
+          />
+        )}
       </div>
       <div className="text-end">
         {errors?.[registerName]?.type === "required" && (

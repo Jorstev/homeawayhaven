@@ -12,7 +12,7 @@ import {
 } from "../../services/apiBookings";
 import { useMutationCustom } from "../../hooks/useMutation";
 
-function BookingItem({ booking }) {
+function BookingItem({ booking, updateBookmarks }) {
   const { booking_id, title, country, price, discount, classification, image } =
     booking;
   const navigate = useNavigate();
@@ -48,8 +48,13 @@ function BookingItem({ booking }) {
     "An error has occured!"
   );
 
-  const handlediscountPrice = (discount) =>
-    (price - (discount / 100) * price).toFixed(2);
+  const handlediscountPrice = (discount) => {
+    if (discount === 0) {
+      return null;
+    } else {
+      return (price - (discount / 100) * price).toFixed(2);
+    }
+  };
 
   const handleDeleteBooking = (e) => {
     e.preventDefault();
@@ -82,6 +87,7 @@ function BookingItem({ booking }) {
     }
 
     setBookmarkState(!bookmarkState);
+    updateBookmarks();
   };
 
   return (

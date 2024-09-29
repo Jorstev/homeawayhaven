@@ -1,6 +1,5 @@
 import { useForm } from "react-hook-form";
 import InputField from "../ui/InputField";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setAdminValidation } from "../features/booking/bookingSlice";
@@ -13,19 +12,14 @@ function Login() {
     handleSubmit,
     register,
     formState: { errors },
-    setValue,
-    reset,
   } = useForm();
 
   const onSubmit = (formData) => {
     dispatch(setAdminValidation(true));
-    // setValidated(true);
-    // let data = { userInfo: formData, validated };
-    // localStorage.setItem("AdminUser", JSON.stringify(data));
     navigate("/login/console");
   };
   return (
-    <div className="mt-14 md:mt-36 mx-auto w-[22rem] md:w-[28rem] md:mx-auto flex flex-col items-center justify-around h-[28rem] md:h-[27rem] shadow-lg">
+    <div className="mt-14 md:mt-24 mx-auto w-[22rem] md:w-[28rem] md:mx-auto flex flex-col items-center justify-around h-[28rem] md:h-[27rem] shadow-lg">
       <div>
         <h1 className="font-semibold text-lg md:text-xl text-gray-600">
           Administration Console

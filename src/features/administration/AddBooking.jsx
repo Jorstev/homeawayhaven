@@ -3,9 +3,14 @@ import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 import InputField from "../../ui/InputField";
 import { useMutationCustom } from "../../hooks/useMutation";
 import { addNewBooking, updateBookingById } from "../../services/apiBookings";
+import AmenityInput from "../booking/AmenityInput";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 
 function AddBooking() {
   const navigate = useNavigate();
+  let amenities = useSelector((state) => state.booking.amenities);
+  const [discountEnable, setDiscountEnable] = useState(true);
 
   const {
     isLoading: isLoadingEdit,
@@ -34,7 +39,7 @@ function AddBooking() {
       return;
     }
     console.log(imageFile);
-    mutateAdd({ imageFile, ...formData });
+    mutateAdd({ imageFile, amenities, ...formData });
     reset();
     navigate(`/login/console`);
   };
@@ -108,13 +113,38 @@ function AddBooking() {
           step={0.01}
           valueAsNumberBoolean={true}
         />
+        <section className="py-7 px-3">
+          <label className="font-light">Amenities</label>
+          <div className="grid grid-cols-3 gap-3 lg:grid-cols-4">
+            <AmenityInput amenityValue={"Wi-Fi"} />
+            <AmenityInput amenityValue={"A/C"} />
+            <AmenityInput amenityValue={"Private Bathroom"} />
+            <AmenityInput amenityValue={"Cable TV"} />
+            <AmenityInput amenityValue={"Parking"} />
+            <AmenityInput amenityValue={"Laundry Facilities"} />
+            <AmenityInput amenityValue={"Pet Friendly"} />
+            <AmenityInput amenityValue={"Balcony"} />
+          </div>
+        </section>
+        <InputField
+          fieldName="Booking Luxury (Discount will be set to 0% automatically)"
+          registerName="luxury"
+          validation={{
+            required: true,
+          }}
+          errors={errors}
+          register={register}
+          selection={true}
+          setDiscountEnable={setDiscountEnable}
+        >
+          <option value={true}>True</option>
+          <option value={false}>False</option>
+        </InputField>
 
         <InputField
           fieldName="Discount"
           registerName="discount"
           validation={{
-            required: true,
-
             pattern: /^(100|[1-9]?[0-9])$/,
           }}
           errors={errors}
@@ -122,6 +152,9 @@ function AddBooking() {
           register={register}
           placeholder={`20`}
           valueAsNumberBoolean={true}
+          disable={discountEnable}
+          // value={`${discountEnable ? 0 : 10}`}
+          discountEnable={discountEnable}
         />
         <InputField
           fieldName="Number of Beds"
@@ -150,6 +183,21 @@ function AddBooking() {
           register={register}
           placeholder={"11:30"}
         />
+        <InputField
+          fieldName="Classification"
+          registerName="classification"
+          validation={{
+            required: true,
+          }}
+          errors={errors}
+          register={register}
+          selection={true}
+        >
+          <option value="cabin">Cabin</option>
+          <option value="hotel">Hotel</option>
+          <option value="house">House</option>
+        </InputField>
+
         <InputField
           fieldName="Image"
           registerName="image"

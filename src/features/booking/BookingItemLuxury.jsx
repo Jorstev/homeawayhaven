@@ -50,7 +50,9 @@ function BookingItem({ booking }) {
             }`}
           >
             <IoLocationSharp className="text-cyan-300" />
-            <span className="text-xs font-light text-gray-400">{country}</span>
+            <span className="text-xs font-light text-gray-400 whitespace-nowrap">
+              {country}
+            </span>
           </div>
           <div>
             {discount ? (

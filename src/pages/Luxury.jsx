@@ -24,9 +24,10 @@ function Luxury() {
           ?.filter((booking) =>
             activeFilter
               ? booking.classification === activeFilter &&
-                booking.discount === 0 &&
+                (booking.discount === 0 || booking.discount === null) &&
                 booking.luxury === true
-              : booking.discount === 0 && booking.luxury === true
+              : (booking.discount === 0 || booking.discount === null) &&
+                booking.luxury === true
           )
           .map((booking) => (
             <BookingItemLuxury booking={booking} key={booking.booking_id} />
