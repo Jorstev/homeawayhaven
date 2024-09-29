@@ -21,7 +21,7 @@ function Administration() {
       <div className="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 place-items-center gap-y-10">
         <Link
           to={"/login/console/add"}
-          className="relative h-64 w-48 md:h-64 md:w-52 flex justify-center items-center shadow-md border border-gray-100 cursor-pointer z-0"
+          className="relative h-64 w-44 md:h-64 md:w-52 flex justify-center items-center shadow-md border border-gray-100 cursor-pointer z-0"
         >
           <AiFillPlusCircle className="text-4xl" color="#0FA958" />
         </Link>
