@@ -34,7 +34,7 @@ function ReservationConfirmation() {
     <div className="max-w-3xl 2xl:max-w-5xl  min-w-[370px] mx-auto">
       <div className="h-full bg-white p-8 rounded-lg relative z-20 flex flex-col items-center space-y-4">
         <div className="w-12 mb-4">
-          <img src="../tablet_logo.png" alt="logo" />
+          <img src="/dist/tablet_logo.png" alt="logo" />
         </div>
 
         <div className="text-xl font-semibold text-gray-800">
