@@ -38,6 +38,8 @@ function BookingDetails() {
     checkout,
   } = bookingDetails;
 
+  let descriptionFormatted = description.text.replace(/´/g, " ");
+
   const handlediscountPrice = (discount) => {
     if (discount === 0) {
       return null;
@@ -76,7 +78,9 @@ function BookingDetails() {
       </section>
       <section className="px-3">
         <section className="flex border-b border-b-gray-300 py-7 justify-between">
-          <div className="pr-5 text-justify text-base">{description}</div>
+          <div className="pr-5 text-justify text-base">
+            {descriptionFormatted}
+          </div>
           <div className="flex flex-col space-y-2">
             <Link
               to={`/booking/${booking_id}/payment`}
