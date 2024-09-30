@@ -38,7 +38,7 @@ function BookingDetails() {
     checkout,
   } = bookingDetails;
 
-  let descriptionFormatted = description.text.replace(/´/g, " ");
+  let descriptionFormatted = description.replace(/´/g, " ");
 
   const handlediscountPrice = (discount) => {
     if (discount === 0) {
