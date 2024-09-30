@@ -2,18 +2,51 @@ import { IoLocationSharp } from "react-icons/io5";
 import { MdDiscount } from "react-icons/md";
 import { Link } from "react-router-dom";
 import HeartBookmark from "../../ui/HeartBookmark";
+import { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
-function BookingItem({ booking }) {
+function BookingItem({ booking, updateBookmarks }) {
   const {
     booking_id,
     title,
     country,
-
+    classification,
     price,
     discount,
     // luxury,
     image,
   } = booking;
+
+  const [bookmarkState, setBookmarkState] = useState(false);
+
+  useEffect(() => {
+    const isBookmarked = localStorage.getItem(booking_id) !== null;
+    setBookmarkState(isBookmarked);
+  }, [booking_id]);
+
+  const handleBookmarkClick = (e) => {
+    e.preventDefault();
+    const data = {
+      booking_id,
+      title,
+      country,
+      price,
+      discount,
+      classification,
+      image,
+    };
+
+    if (bookmarkState) {
+      localStorage.removeItem(booking_id);
+      toast.success("Successfully Removed!");
+    } else {
+      localStorage.setItem(booking_id, JSON.stringify(data));
+      toast.success("Bookmarked Successfully!");
+    }
+
+    setBookmarkState(!bookmarkState);
+    updateBookmarks();
+  };
 
   const discountPrice = (discount) =>
     (price - (discount / 100) * price).toFixed(2);
@@ -35,7 +68,11 @@ function BookingItem({ booking }) {
         </div>
       </div>
       <div className="flex flex-col justify-between pb-2">
-        <HeartBookmark position={"left-1 top-1"} />
+        <HeartBookmark
+          position={"left-1 top-1"}
+          bookmarkState={bookmarkState}
+          onClick={handleBookmarkClick}
+        />
         <div className="">
           <span className="text-base font-medium text-right">{title}</span>
         </div>
