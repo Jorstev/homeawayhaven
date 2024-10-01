@@ -1,12 +1,25 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useNavigate, useOutletContext, useParams } from "react-router-dom";
 
 function ReservationConfirmation() {
+  const navigate = useNavigate();
   const formData = useSelector((state) => state.booking.formData);
-  const { firstName, Calendar, emailAddress, lastName } = formData;
-
   const { booking_id } = useParams();
   const { bookings } = useOutletContext();
+
+  useEffect(() => {
+    if (!formData) {
+      navigate("/"); // Redirect to '/booking' or any other page
+    }
+  }, [navigate, formData]);
+
+  if (!formData) {
+    return null; // Optionally, you can show a loader or fallback UI while redirecting
+  }
+
+  const { firstName, Calendar, emailAddress, lastName } = formData;
+
   const bookingDetails = bookings.find(
     (booking) => booking.booking_id === booking_id
   );
@@ -45,7 +58,7 @@ function ReservationConfirmation() {
           Your payment of{" "}
           <span className="font-bold text-green-500">
             $
-            {discount !== 0
+            {discount !== 0 || discount === null
               ? `${handlediscountPrice(discount)} (🙌 Promotional Price)`
               : price}
           </span>{" "}

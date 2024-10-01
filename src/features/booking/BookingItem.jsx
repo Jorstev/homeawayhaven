@@ -13,8 +13,16 @@ import {
 import { useMutationCustom } from "../../hooks/useMutation";
 
 function BookingItem({ booking, updateBookmarks }) {
-  const { booking_id, title, country, price, discount, classification, image } =
-    booking;
+  const {
+    booking_id,
+    title,
+    country,
+    price,
+    discount,
+    luxury,
+    classification,
+    image,
+  } = booking;
   const navigate = useNavigate();
   const currentURL = useLocation();
   const [bookmarkState, setBookmarkState] = useState(false);
@@ -93,7 +101,15 @@ function BookingItem({ booking, updateBookmarks }) {
   return (
     <Link
       to={`/booking/${booking_id}`}
-      className="relative h-64 w-44 md:h-64 md:w-52 flex flex-col justify-between shadow-md border border-gray-100 cursor-pointer z-0 "
+      className={`relative flex justify-between shadow-md border border-gray-100 cursor-pointer${
+        luxury && currentURL.pathname !== "/login/console"
+          ? "h-40 w-80 border-r-8 border-r-yellow-300"
+          : "h-64 w-44 md:h-64 md:w-52 flex-col z-0 "
+      } ${
+        luxury && currentURL.pathname === "/login/console"
+          ? "border-r-8 border-r-yellow-300"
+          : ""
+      }`}
     >
       {currentURL.pathname === "/login/console" ? (
         <>
@@ -109,7 +125,14 @@ function BookingItem({ booking, updateBookmarks }) {
       ) : (
         ""
       )}
-      <div className="w-full h-44 clip_polygon">
+
+      <div
+        className={`w-full  ${
+          luxury && currentURL.pathname !== "/login/console"
+            ? "h-full clip_polygon_luxury"
+            : "h-44 clip_polygon"
+        }`}
+      >
         <img
           className="w-full h-44 bg-gray-300"
           src={image}
@@ -118,44 +141,81 @@ function BookingItem({ booking, updateBookmarks }) {
           loading="lazy"
         />
       </div>
-
-      {currentURL.pathname === "/login/console" ? (
-        ""
-      ) : (
-        <HeartBookmark
-          position={"right-1 top-1"}
-          bookmarkState={bookmarkState}
-          onClick={handleBookmarkClick}
-        />
-      )}
-      <div className="w-full pl-1">
-        <span className="text-base font-medium whitespace-nowrap">{title}</span>
-      </div>
       <div
-        className={`flex justify-around w-full  ${discount ? "h-12" : "h-6"}`}
+        className={`flex flex-col justify-between ${
+          luxury && currentURL.pathname !== "/login/console" ? " pb-2" : " h-20"
+        }`}
       >
+        {currentURL.pathname === "/login/console" ? (
+          ""
+        ) : (
+          <HeartBookmark
+            position={`${
+              luxury && currentURL.pathname !== "/login/console"
+                ? "left-1 top-1"
+                : "right-1 top-1"
+            }`}
+            bookmarkState={bookmarkState}
+            onClick={handleBookmarkClick}
+          />
+        )}
         <div
-          className={`flex space-x-1 ${
-            discount ? "items-end" : "items-center"
+          className={`${
+            luxury && currentURL.pathname !== "/login/console"
+              ? ""
+              : "w-full pl-1"
           }`}
         >
-          <IoLocationSharp className="text-cyan-300" />
-          <span className="text-xs font-light text-gray-400">{country}</span>
+          <span
+            className={`text-base font-medium ${
+              luxury && currentURL.pathname !== "/login/console"
+                ? "text-right"
+                : "whitespace-nowrap"
+            }`}
+          >
+            {title}
+          </span>
         </div>
-        <div>
-          {discount ? (
-            <div className="flex flex-col justify-between h-12">
-              <div className="flex space-x-1 items-center">
-                <MdDiscount className="text-green-600" />
-                <span>${handlediscountPrice(discount)}</span>
+        <div
+          className={`flex justify-around${
+            luxury && currentURL.pathname !== "/login/console"
+              ? ` flex-col items-end space-y-1 pr-1 ${
+                  discount ? "h-12" : "h-9"
+                }`
+              : ` w-full ${discount ? "h-12" : "h-6"}`
+          }  `}
+        >
+          <div
+            className={`flex space-x-1 ${
+              discount ? "items-end" : "items-center"
+            }`}
+          >
+            <IoLocationSharp className="text-cyan-300" />
+            <span
+              className={`text-xs font-light text-gray-400 ${
+                luxury && currentURL.pathname !== "/login/console"
+                  ? "whitespace-nowrap"
+                  : ""
+              }`}
+            >
+              {country}
+            </span>
+          </div>
+          <div>
+            {discount ? (
+              <div className="flex flex-col justify-between h-12">
+                <div className="flex space-x-1 items-center">
+                  <MdDiscount className="text-green-600" />
+                  <span>${handlediscountPrice(discount)}</span>
+                </div>
+                <span className="text-right text-sm text-red-500 line-through">
+                  ${price}
+                </span>
               </div>
-              <span className="text-right text-sm text-red-500 line-through">
-                ${price}
-              </span>
-            </div>
-          ) : (
-            <span className="font-light">${price}</span>
-          )}
+            ) : (
+              <span className="font-light">${price}</span>
+            )}
+          </div>
         </div>
       </div>
     </Link>
