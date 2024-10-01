@@ -52,7 +52,7 @@ function Promotion() {
         ))}
       </div>
 
-      <div className="flex justify-center mt-6">
+      <div className="flex justify-center my-6">
         {Array.from({ length: totalPages }, (_, i) => (
           <button
             key={i + 1}
