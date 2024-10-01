@@ -2,6 +2,7 @@ import { LiaBarsSolid } from "react-icons/lia";
 import { IoMdClose } from "react-icons/io";
 import NavOption from "./NavOption";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 function Header({ showMenu, setShowMenu, isActive }) {
   const adminLoginState = useSelector((state) => state.booking.adminValidation);
@@ -23,16 +24,20 @@ function Header({ showMenu, setShowMenu, isActive }) {
             )}
           </div>
           <div className="h-full flex items-center justify-center md:items-start md:mt-10 lg:mb-40">
-            <img
-              className="max-h-20 md:hidden lg:block"
-              src="/logo.png"
-              alt="logo"
-            />
-            <img
-              className="max-h-12 hidden md:block lg:hidden"
-              src="/tablet_logo.png"
-              alt="logo"
-            />
+            <Link to={"/"}>
+              <img
+                className="max-h-20 md:hidden lg:block"
+                src="/logo.png"
+                alt="logo"
+              />
+            </Link>
+            <Link to={"/"}>
+              <img
+                className="max-h-12 hidden md:block lg:hidden"
+                src="/tablet_logo.png"
+                alt="logo"
+              />
+            </Link>
           </div>
         </div>
         {showMenu || isActive ? (
