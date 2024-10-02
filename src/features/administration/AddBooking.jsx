@@ -1,8 +1,8 @@
 import { useForm } from "react-hook-form";
-import { useNavigate, useOutletContext, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import InputField from "../../ui/InputField";
 import { useMutationCustom } from "../../hooks/useMutation";
-import { addNewBooking, updateBookingById } from "../../services/apiBookings";
+import { addNewBooking } from "../../services/apiBookings";
 import AmenityInput from "../booking/AmenityInput";
 import { useState } from "react";
 import { useSelector } from "react-redux";

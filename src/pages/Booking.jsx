@@ -1,40 +1,26 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import BookingFilter from "../features/booking/BookingFilter";
 import BookingItem from "../features/booking/BookingItem";
 import { useOutletContext } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { usePaginationCalc } from "../hooks/usePaginationCalc";
 
 function Booking() {
   const activeFilter = useSelector((state) => state.booking.activeFilter);
-
   const { bookings, isError, error } = useOutletContext();
-
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
-
   const handlePageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
 
-  const totalPages = Math.ceil(
-    bookings?.filter((booking) =>
-      activeFilter
-        ? booking.classification === activeFilter &&
-          booking.discount === 0 &&
-          booking.luxury === false
-        : booking.discount === 0 && booking.luxury === false
-    ).length / itemsPerPage
-  );
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [activeFilter]);
 
-  const filteredBookings = bookings
-    ?.filter((booking) =>
-      activeFilter
-        ? booking.classification === activeFilter &&
-          booking.discount === 0 &&
-          booking.luxury === false
-        : booking.discount === 0 && booking.luxury === false
-    )
-    .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
+  const { totalPages, filteredBookings, bookingType } = usePaginationCalc(
+    currentPage,
+    bookings
+  );
 
   if (isError) {
     return <span>Error: {error.message}</span>;
@@ -46,7 +32,13 @@ function Booking() {
       <h1 className="py-7 pl-3 sm:pl-20 md:pl-10 text-2xl font-semibold">
         Booking
       </h1>
-      <div className="grid grid-cols-2 md:grid-cols-3 2xl:grid-cols-4 place-items-center gap-y-10">
+      <div
+        className={`grid place-items-center gap-y-10 ${
+          bookingType === "luxury"
+            ? "grid-cols-1 md:grid-cols-2 2xl:grid-cols-3"
+            : "grid-cols-2 md:grid-cols-3 2xl:grid-cols-4"
+        }`}
+      >
         {filteredBookings?.map((booking) => (
           <BookingItem booking={booking} key={booking.booking_id} />
         ))}

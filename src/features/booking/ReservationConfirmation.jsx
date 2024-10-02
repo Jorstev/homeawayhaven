@@ -54,7 +54,7 @@ function ReservationConfirmation() {
           Your payment of{" "}
           <span className="font-bold text-green-500">
             $
-            {discount !== 0 || discount === null
+            {discount !== 0 || discount !== null
               ? `${handlediscountPrice(discount)} (🙌 Promotional Price)`
               : price}
           </span>{" "}

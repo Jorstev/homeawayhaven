@@ -8,7 +8,7 @@ function Administration() {
   const { bookings, isError, error } = useOutletContext();
 
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 20; // Adjust the number of items per page
+  const itemsPerPage = 20;
 
   // Handle page change
   const handlePageChange = (pageNumber) => {

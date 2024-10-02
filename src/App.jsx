@@ -2,8 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import AppLayout from "./ui/AppLayout";
 import Booking from "./pages/Booking";
 import Bookmark from "./pages/Bookmark";
-import Promotion from "./pages/Promotion";
-import Luxury from "./pages/Luxury";
+
 import Administration from "./pages/Administration";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -42,8 +41,8 @@ function App() {
               path="/booking/:booking_id/payment/confirmation"
               element={<ReservationConfirmation />}
             />
-            <Route path="/promotion" element={<Promotion />} />
-            <Route path="/luxury" element={<Luxury />} />
+            <Route path="/promotion" element={<Booking />} />
+            <Route path="/luxury" element={<Booking />} />
             <Route path="/bookmark" element={<Bookmark />} />
             <Route path="/login" element={<Login />} />
             <Route path="/login/console" element={<Administration />} />
