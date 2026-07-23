@@ -53,10 +53,9 @@ function ReservationConfirmation() {
         <div className="text-gray-600 text-center">
           Your payment of{" "}
           <span className="font-bold text-green-500">
-            $
-            {discount !== 0 || discount !== null
-              ? `${handlediscountPrice(discount)} (🙌 Promotional Price)`
-              : price}
+            {discount > 0
+              ? `$${handlediscountPrice(discount)} (🙌 Promotional Price)`
+              : `$${price}`}
           </span>{" "}
           has been processed successfully.
         </div>

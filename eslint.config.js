@@ -37,4 +37,25 @@ export default [
       "react/prop-types": "off",
     },
   },
+  {
+    files: ["server/**/*.js"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+  },
+  {
+    files: ["scripts/mongodb/**/*.js"],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+        db: "readonly",
+        BinData: "readonly",
+        ISODate: "readonly",
+        ObjectId: "readonly",
+        print: "readonly",
+      },
+    },
+  },
 ];

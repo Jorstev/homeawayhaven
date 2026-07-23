@@ -1,42 +1,41 @@
-import supabase from "./supabase";
+async function requestJson(path, options = {}) {
+  const response = await fetch(path, options);
+
+  if (!response.ok) {
+    let message = "Request failed";
+
+    try {
+      const errorData = await response.json();
+      message = errorData.message || message;
+    } catch {
+      // Keep the default message when the response body is not JSON.
+    }
+
+    throw new Error(message);
+  }
+
+  if (response.status === 204) return null;
+
+  return response.json();
+}
 
 export async function getAllBooking() {
-  let { data, error } = await supabase.from("booking").select("*");
-
-  if (error) {
-    console.error(error);
-    throw new Error("Booking options could not be loaded");
-  }
-  return data;
+  return requestJson("/api/bookings");
 }
 
 export async function getAllAmenitiesById(booking_id) {
-  let { data: amenities, error } = await supabase
-    .from("booking_amenities")
-    .select(
-      `
-      amenity_id,
-      amenities (amenity)
-    `
-    )
-    .eq("booking_id", booking_id);
+  return requestJson(`/api/bookings/${booking_id}/amenities`);
+}
 
-  if (error) {
-    throw new Error("We could not load the amenities");
-  }
-
-  return amenities;
+export async function getAllAmenities() {
+  return requestJson("/api/amenities");
 }
 
 export async function deleteBookingById(booking_id) {
-  const { error } = await supabase
-    .from("booking")
-    .delete()
-    .eq("booking_id", booking_id);
+  await requestJson(`/api/bookings/${booking_id}`, {
+    method: "DELETE",
+  });
 
-  if (error) {
-    throw new Error("We could not add the new amenity");
-  }
   for (const key in localStorage) {
     if (localStorage.getItem(key) === booking_id) {
       localStorage.removeItem(booking_id);
@@ -46,58 +45,30 @@ export async function deleteBookingById(booking_id) {
 }
 
 export async function updateBookingById({ booking_id, ...formData }) {
-  const { data, error } = await supabase
-    .from("booking")
-    .update(formData)
-    .eq("booking_id", booking_id);
-
-  if (error) throw new Error("We could not update the selected item.");
-}
-
-async function addNewAmenities(amenities) {
-  const { data, error } = await supabase
-    .from("booking_amenities")
-    .insert(amenities);
-
-  if (error) {
-    console.error(error);
-    throw new Error("Booking could not be created");
-  }
+  return requestJson(`/api/bookings/${booking_id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(formData),
+  });
 }
 
 export async function addNewBooking({ imageFile, amenities, ...formData }) {
-  let booking_id = Date.now();
+  const payload = new FormData();
 
-  const imageName = `${Math.random()}-${imageFile.name}`.replaceAll("/", "");
-  const imagePath = `https://ryesuiscgjwqoanptuwr.supabase.co/storage/v1/object/public/bookingimages/${imageName}`;
+  Object.entries(formData).forEach(([key, value]) => {
+    payload.append(key, value);
+  });
 
-  formData = { ...formData, image: imagePath, booking_id: booking_id };
+  amenities.forEach((amenityId) => {
+    payload.append("amenities", amenityId);
+  });
 
-  const { data, error } = await supabase
-    .from("booking")
-    .insert([formData])
-    .select();
-  if (error) {
-    console.error(error);
-    throw new Error("Booking could not be created");
-  }
+  payload.append("image", imageFile);
 
-  console.log(amenities);
-
-  let booking_amenities = amenities.map((amenity_id) => ({
-    booking_id,
-    amenity_id,
-  }));
-  console.log(booking_amenities);
-
-  await addNewAmenities(booking_amenities);
-
-  const { error: storageError } = await supabase.storage
-    .from("bookingimages")
-    .upload(imageName, imageFile);
-
-  if (storageError) {
-    console.error(storageError);
-    throw new Error("Image upload failed");
-  }
+  return requestJson("/api/bookings", {
+    method: "POST",
+    body: payload,
+  });
 }

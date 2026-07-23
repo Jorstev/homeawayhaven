@@ -15,18 +15,20 @@ function InputField({
   discountEnable,
   setDiscountEnable,
 }) {
+  const inputWidthClass = fieldName === "CVV" ? "w-full md:max-w-[9rem]" : "w-full";
+
   return (
-    <div>
+    <div className="w-full min-w-0">
       <div
-        className={`flex flex-col md:flex-row md:items-center justify-between w-72  md:w-96 mb-8`}
+        className={`mb-8 flex w-full min-w-0 flex-col gap-3 md:flex-row md:flex-wrap md:items-center md:justify-between`}
       >
-        <label className="font-light">{fieldName}</label>
+        <label className="font-light text-slate-900 md:shrink-0">{fieldName}</label>
 
         {selection ? (
           <select
-            className={`bg-gray-100 rounded-lg py-2 outline-none ${
+            className={`${inputWidthClass} min-w-0 rounded-lg bg-gray-100 py-2 outline-none ${
               errors?.[registerName] ? "border border-red-500" : ""
-            } ${fieldName === "CVV" ? "w-14 px-2" : "px-8"}`}
+            } ${fieldName === "CVV" ? "px-2" : "px-8"}`}
             {...register(registerName)}
             onChange={(e) => setDiscountEnable(e.target.value === "true")}
           >
@@ -34,9 +36,9 @@ function InputField({
           </select>
         ) : (
           <input
-            className={`bg-gray-100 rounded-lg py-2 outline-none ${
+            className={`${inputWidthClass} min-w-0 rounded-lg bg-gray-100 py-2 outline-none ${
               errors?.[registerName] ? "border border-red-500" : ""
-            } ${fieldName === "CVV" ? "w-14 px-2" : "px-8"} `}
+            } ${fieldName === "CVV" ? "px-2" : "px-8"} `}
             value={value}
             type={type}
             placeholder={placeholder}

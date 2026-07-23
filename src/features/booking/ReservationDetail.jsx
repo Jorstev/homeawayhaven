@@ -21,12 +21,12 @@ function ReservationDetail({ maxCapacity, detail, numBeds, checkout }) {
     },
   };
   return (
-    <div className="w-44 bg-gray-50 flex flex-col items-center text-center justify-center py-2 shadow-md">
-      <div className="w-full flex items-center px-1 justify-evenly">
+    <div className="rounded-[1.5rem] border border-slate-200/80 bg-[linear-gradient(180deg,_#ffffff_0%,_#f8fafc_100%)] px-4 py-5 shadow-[0_14px_32px_rgba(148,163,184,0.18)]">
+      <div className="flex items-center justify-between gap-3">
         {type[detail].icon}
-        <span className=" font-light text-sm">{type[detail].name}</span>
+        <span className="text-sm font-medium text-slate-500">{type[detail].name}</span>
       </div>
-      <div className="text-3xl text-cyan-400">{type[detail].value}</div>
+      <div className="mt-4 text-3xl font-semibold text-cyan-500">{type[detail].value}</div>
     </div>
   );
 }
